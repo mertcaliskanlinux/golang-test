@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package main;
+
+
+message Clients {
+    int32 ID = 1;
+    string FirstName = 2;
+    string LastName =3;
+    string Password = 4;
+    string Descriptions =5;
+}
+
