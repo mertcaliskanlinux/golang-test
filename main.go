@@ -3,10 +3,9 @@ package main
 import (
 	"net/http"
 
-	c "github.com/mertcaliskanlnx/Clients"
-
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
+	c "github.com/mertcaliskanlnx/golang-test/Clients"
 )
 
 func main() {

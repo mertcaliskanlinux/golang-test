@@ -22,6 +22,7 @@ type Client struct {
 // Veritabanı bağlantısı
 func Connect() (*sql.DB, error) {
 	db, err := sql.Open("mysql", "mertlinux:123@tcp/api_database")
+
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +43,7 @@ func GetClientList(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query("SELECT * FROM client")
+	rows, err := db.Query("SELECT * FROM Clients")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -72,7 +73,12 @@ func AddClient(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	var c Client
+	c := Client{
+		FirstName:    r.FormValue("firstname"),
+		LastName:     r.FormValue("lastname"),
+		Password:     r.FormValue("password"),
+		Descriptions: r.FormValue("descriptions"),
+	}
 
 	json.NewDecoder(r.Body).Decode(&c)
 
@@ -81,7 +87,7 @@ func AddClient(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, err := db.Exec("INSERT INTO client(firstname, lastname, password, descriptions) VALUES(?, ?, ?, ?)", c.FirstName, c.LastName, c.Password, c.Descriptions)
+	result, err := db.Exec("INSERT INTO Clients (firstname, lastname, password, descriptions) VALUES(?, ?, ?, ?)", c.FirstName, c.LastName, c.Password, c.Descriptions)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -122,7 +128,7 @@ func UpdateClient(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err = db.Exec("UPDATE client SET firstname=?, lastname=?, password=?, descriptions=? WHERE id=?", c.FirstName, c.LastName, c.Password, c.Descriptions, id)
+	_, err = db.Exec("UPDATE Clients SET firstname=?, lastname=?, password=?, descriptions=? WHERE id=?", c.FirstName, c.LastName, c.Password, c.Descriptions, id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -148,7 +154,7 @@ func DeleteClient(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err = db.Exec("DELETE FROM client WHERE id=?", id)
+	_, err = db.Exec("DELETE FROM Clients WHERE id=?", id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

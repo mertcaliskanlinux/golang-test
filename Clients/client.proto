@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package main;
 
+option go_package = "github.com/mertcaliskanlnx/golang-test/Clients";
 
 message Clients {
     int32 ID = 1;
