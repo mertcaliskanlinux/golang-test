@@ -7,8 +7,7 @@
 
 | #  | Title | Solution  | Difficulty | Acceptance
 
-* https://talks.golang.org/2014/names.slide
-* https://golang.org/doc/effective_go.html#names
-* https://blog.golang.org/package-names
-* https://github.com/golang/go/wiki/CodeReviewComments
-* [Style guideline for Go packages](https://rakyll.org/style-packages) (rakyll/JBD)
+* (GET)  http://localhost:8080/clients
+* (POST)  http://localhost:8080/client?firstname=123&lastname=123&password=123&descriptions=123
+* (PUT)  http://localhost:8080/client/id
+* (DELETE) http://localhost:8080/client/firstname/tpm_key
