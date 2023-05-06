@@ -1,6 +1,8 @@
 package Clients
 
 import (
+	"crypto/rand"
+	"crypto/sha256"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -17,6 +19,23 @@ type Client struct {
 	LastName     string `json:"lastname"`
 	Password     string `json:"password"`
 	Descriptions string `json:"descriptions"`
+	TpmKey       string `json:"tpmkey"`
+}
+
+func KeyGenerateSH256() (string, error) {
+
+	b := make([]byte, 32)
+	_, err := rand.Read(b)
+	if err != nil {
+		fmt.Println("error:", err)
+		return err.Error(), err
+	}
+
+	h := sha256.New() //machine language genarete
+	fmt.Println(h)    //machine language result
+	h.Write(b)        //machine language write b variable added 32 byte random number and string
+
+	return fmt.Sprintf("%x", h.Sum(nil)), err
 }
 
 // Veritabanı bağlantısı
@@ -54,7 +73,7 @@ func GetClientList(w http.ResponseWriter, r *http.Request) {
 
 	for rows.Next() {
 		var c Client
-		if err := rows.Scan(&c.ID, &c.FirstName, &c.LastName, &c.Password, &c.Descriptions); err != nil {
+		if err := rows.Scan(&c.ID, &c.FirstName, &c.LastName, &c.Password, &c.Descriptions, &c.TpmKey); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -73,11 +92,14 @@ func AddClient(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
+	tpm_key, _ := KeyGenerateSH256()
+
 	c := Client{
 		FirstName:    r.FormValue("firstname"),
 		LastName:     r.FormValue("lastname"),
 		Password:     r.FormValue("password"),
 		Descriptions: r.FormValue("descriptions"),
+		TpmKey:       r.FormValue("tpmkey"),
 	}
 
 	json.NewDecoder(r.Body).Decode(&c)
@@ -87,7 +109,7 @@ func AddClient(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, err := db.Exec("INSERT INTO Clients (firstname, lastname, password, descriptions) VALUES(?, ?, ?, ?)", c.FirstName, c.LastName, c.Password, c.Descriptions)
+	result, err := db.Exec("INSERT INTO Clients (firstname, lastname, password, descriptions,tpmkey) VALUES(?, ?, ?, ?, ?)", c.FirstName, c.LastName, c.Password, c.Descriptions, tpm_key)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -139,24 +161,27 @@ func UpdateClient(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(c)
 }
-
 func DeleteClient(w http.ResponseWriter, r *http.Request) {
+
 	db, err := Connect()
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
-	vars := mux.Vars(r)
-	id, err := strconv.Atoi(vars["id"])
+	firstname := mux.Vars(r)["firstname"]
+	tpm_key := mux.Vars(r)["tpmkey"]
+
+	fmt.Println(firstname, "asd", tpm_key)
+	result, err := db.Exec("DELETE FROM Clients WHERE firstname=? AND tpmkey=?", firstname, tpm_key)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	_, err = db.Exec("DELETE FROM Clients WHERE id=?", id)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	rowsAffected, _ := result.RowsAffected()
+	if rowsAffected == 0 {
+		http.Error(w, "No rows found", http.StatusNotFound)
 		return
 	}
 

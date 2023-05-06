@@ -20,7 +20,7 @@ func main() {
 	// Müşteri güncelleme işlemi
 	r.HandleFunc("/client/{id}", c.UpdateClient).Methods("PUT")
 	// Müşteri silme işlemi
-	r.HandleFunc("/client/{id}", c.DeleteClient).Methods("DELETE")
+	r.HandleFunc("/client/{firstname}/{tpmkey}", c.DeleteClient).Methods("DELETE")
 
 	// Sunucuyu başlatma
 	http.ListenAndServe(":8080", r)
