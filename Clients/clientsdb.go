@@ -93,38 +93,49 @@ func AddClient(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	// tpm_key, _ := KeyGenerateSH256()
-	tpm_key, _ := KeyGenerateSH256()
 
-	c := Client{
-		FirstName:    r.FormValue("firstname"),
-		LastName:     r.FormValue("lastname"),
-		Password:     r.FormValue("password"),
-		Descriptions: r.FormValue("descriptions"),
-		TpmKey:       r.FormValue("tpmkey"),
+	if DecryptFile() == "apidatabasekey" {
+
+		fmt.Println("Database Bağlantı Anahtarı Doğru")
+
+		tpm_key, _ := KeyGenerateSH256()
+
+		c := Client{
+			FirstName:    r.FormValue("firstname"),
+			LastName:     r.FormValue("lastname"),
+			Password:     r.FormValue("password"),
+			Descriptions: r.FormValue("descriptions"),
+			TpmKey:       r.FormValue("tpmkey"),
+		}
+
+		json.NewDecoder(r.Body).Decode(&c)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		result, err := db.Exec("INSERT INTO Clients (firstname, lastname, password, descriptions,tpmkey) VALUES(?, ?, ?, ?, ?)", c.FirstName, c.LastName, c.Password, c.Descriptions, tpm_key)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		lastInsertID, err := result.LastInsertId()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		c.ID = int(lastInsertID)
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(c)
+
+	} else {
+
+		fmt.Println("Key is not correct")
 	}
 
-	json.NewDecoder(r.Body).Decode(&c)
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	result, err := db.Exec("INSERT INTO Clients (firstname, lastname, password, descriptions,tpmkey) VALUES(?, ?, ?, ?, ?)", c.FirstName, c.LastName, c.Password, c.Descriptions, tpm_key)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	lastInsertID, err := result.LastInsertId()
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	c.ID = int(lastInsertID)
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(c)
 }
 
 func UpdateClient(w http.ResponseWriter, r *http.Request) {

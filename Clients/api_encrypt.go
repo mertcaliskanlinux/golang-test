@@ -51,6 +51,7 @@ func EncryteFile() string {
 }
 
 func DecryptFile() string {
+
 	rawKey := EncryteFile()
 
 	key := []byte(rawKey) // 16 bytes
@@ -82,5 +83,5 @@ func DecryptFile() string {
 		panic(err.Error())
 	}
 
-	return fmt.Sprintf("%s\n", plaintext)
+	return fmt.Sprintf("%s", plaintext)
 }
