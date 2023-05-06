@@ -7,7 +7,7 @@
 
 | #  | GO | LANG  | MUX | EXAMPLE
 
-![Resim Açıklaması](https://media.kommunity.com/communities/mdisec-cyber-security-twitch-streams/events/golang-for-hackers-1-hello-security-0927549b/25491/golang-1.png?p=event-640)
+![Resim Açıklaması](https://www.pngaaa.com/detail/2538175)
 
 
 * (GET)  http://localhost:8080/clients
