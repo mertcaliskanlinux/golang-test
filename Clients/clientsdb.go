@@ -94,7 +94,7 @@ func AddClient(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	// tpm_key, _ := KeyGenerateSH256()
-
+	// apidatabase key file read and decrypt
 	if DecryptFile() == "apidatabasekey" {
 
 		fmt.Println("Database Bağlantı Anahtarı Doğru")
