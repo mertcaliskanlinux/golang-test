@@ -79,6 +79,7 @@ func DecryptFile() string {
 
 	nonce, ciphertext := ciphertext[:nonceSize], ciphertext[nonceSize:]
 	plaintext, err := gcm.Open(nil, nonce, ciphertext, nil)
+
 	if err != nil {
 		panic(err.Error())
 	}
