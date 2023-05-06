@@ -7,7 +7,7 @@
 
 | #  | GO | LANG  | MUX | EXAMPLE
 
-![Resim Açıklaması](https://www.google.com/imgres?imgurl=https%3A%2F%2Fimage.pngaaa.com%2F175%2F2538175-middle.png&tbnid=ho3VTAu7bI419M&vet=12ahUKEwjZrYL-wOD-AhVByKQKHdCHAZ8QMygXegUIARDiAQ..i&imgrefurl=https%3A%2F%2Fwww.pngaaa.com%2Fdetail%2F2538175&docid=qRxF941wjdjtQM&w=900&h=531&q=golang%20transparent%20logo&client=ubuntu-sn&ved=2ahUKEwjZrYL-wOD-AhVByKQKHdCHAZ8QMygXegUIARDiAQ)
+![Resim Açıklaması](https://www.kindpng.com/picc/m/424-4241996_addthis-sharing-buttons-transparent-png-golang-gopher-png.png)
 
 
 * (GET)  http://localhost:8080/clients
