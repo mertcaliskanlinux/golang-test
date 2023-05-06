@@ -24,7 +24,7 @@ type Client struct {
 
 func KeyGenerateSH256() (string, error) {
 
-	b := make([]byte, 32)
+	b := make([]byte, 64)
 	_, err := rand.Read(b)
 	if err != nil {
 		fmt.Println("error:", err)
@@ -92,6 +92,7 @@ func AddClient(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
+	// tpm_key, _ := KeyGenerateSH256()
 	tpm_key, _ := KeyGenerateSH256()
 
 	c := Client{

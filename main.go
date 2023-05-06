@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -10,7 +11,8 @@ import (
 
 func main() {
 	// Router oluşturma
-
+	key := c.DecryptFile()
+	fmt.Println(key, "key")
 	r := mux.NewRouter()
 
 	// Tüm müşterileri listeleme
