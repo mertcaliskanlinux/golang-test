@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-    | #  | GO | LANG  | MUX | | SH256 | DEVELOPERS
+    | # | GO | LANG  | MUX | | SH256 | DEVELOPERS | # |
 </p>
 
 ![Resim Açıklaması](https://gophersource.com/img/inclusion.png)
