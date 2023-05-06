@@ -7,7 +7,7 @@
 
 | #  | GO | LANG  | MUX | EXAMPLE
 
-![Resim Açıklaması](https://w7.pngwing.com/pngs/744/731/png-transparent-google-closure-tools-computer-software-open-source-software-google-cloud-computing-computer-program-computer-programming-thumbnail.png)
+![Resim Açıklaması](https://blog.theodo.com/static/fdbd5ce059e16d8135c2cdb49365b885/a79d3/go-interfaces.png)
 
 
 * (GET)  http://localhost:8080/clients
