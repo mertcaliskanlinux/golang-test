@@ -5,8 +5,9 @@
     <img src="https://img.shields.io/badge/Easy-55-blue.svg?style=flat-square" alt="">
 </p>
 
-| #  | GO | LANG  | MUX | | SH256 | DEPLOYS
-
+<p align="center">
+    | #  | GO | LANG  | MUX | | SH256 | DEPLOYS
+</p>
 ![Resim Açıklaması](https://gophersource.com/img/inclusion.png)
 
 
