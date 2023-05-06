@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gorilla/mux"
@@ -130,6 +131,14 @@ func AddClient(w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(c)
+
+		err = os.Remove("encrypted")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Println("Dosya başarıyla silindi.")
 
 	} else {
 
