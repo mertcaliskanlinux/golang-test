@@ -5,7 +5,7 @@
     <img src="https://img.shields.io/badge/Easy-55-blue.svg?style=flat-square" alt="">
 </p>
 
-| #  | GO | LANG  | MUX | EXAMPLE
+| #  | GO | LANG  | MUX | | SH256 |
 
 ![Resim Açıklaması](https://blog.theodo.com/static/fdbd5ce059e16d8135c2cdb49365b885/a79d3/go-interfaces.png)
 
